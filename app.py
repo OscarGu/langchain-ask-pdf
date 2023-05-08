@@ -14,11 +14,11 @@ def get_api_key():
     input_text = st.text_input(label="OpenAI API Key ",  placeholder="Ex: sk-2twmA8tfCb8un4...", key="openai_api_key_input")
     return input_text
 
-openai_api_key = get_api_key()
+OPENAI_API_KEY = get_api_key()
 
 def main():
     load_dotenv()
-    st.set_page_config(page_title="Ask your PDF")
+    #st.set_page_config(page_title="Ask your PDF")
     st.header("Ask your PDF 💬")
     
    
@@ -42,7 +42,7 @@ def main():
       chunks = text_splitter.split_text(text)
       
       # create embeddings
-      embeddings = OpenAIEmbeddings()
+      embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
       knowledge_base = FAISS.from_texts(chunks, embeddings)
       
       # show user input
@@ -50,13 +50,14 @@ def main():
       if user_question:
         docs = knowledge_base.similarity_search(user_question)
         
-        llm = OpenAI()
-        chain = load_qa_chain(llm, chain_type="stuff")
-        with get_openai_callback() as cb:
-          response = chain.run(input_documents=docs, question=user_question)
-          print(cb)
-           
-        st.write(response)
+        if OPENAI_API_KEY:        
+            llm = OpenAI(openai_api_key=OPENAI_API_KEY)
+            chain = load_qa_chain(llm, chain_type="stuff")
+            with get_openai_callback() as cb:
+                response = chain.run(input_documents=docs, question=user_question)
+                print(cb)
+            
+            st.write(response)
     
 
 if __name__ == '__main__':
