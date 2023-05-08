@@ -52,7 +52,7 @@ def main():
         
         if OPENAI_API_KEY:        
             llm = OpenAI(openai_api_key=OPENAI_API_KEY)
-            chain = load_qa_chain(llm, chain_type="stuff")
+            chain = load_qa_chain(llm, chain_type="map_reduce")
             with get_openai_callback() as cb:
                 response = chain.run(input_documents=docs, question=user_question)
                 print(cb)
