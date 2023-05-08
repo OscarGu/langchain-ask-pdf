@@ -9,11 +9,19 @@ from langchain.llms import OpenAI
 from langchain.callbacks import get_openai_callback
 
 
+# add openAI key input
+def get_api_key():
+    input_text = st.text_input(label="OpenAI API Key ",  placeholder="Ex: sk-2twmA8tfCb8un4...", key="openai_api_key_input")
+    return input_text
+
+openai_api_key = get_api_key()
+
 def main():
     load_dotenv()
     st.set_page_config(page_title="Ask your PDF")
     st.header("Ask your PDF 💬")
     
+   
     # upload file
     pdf = st.file_uploader("Upload your PDF", type="pdf")
     
