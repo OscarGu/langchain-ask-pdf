@@ -32,13 +32,14 @@ def main():
     
    
     # upload file
-    pdf = st.file_uploader("Upload your PDF/Text")
+    uploaded_file = st.file_uploader("Upload your PDF/Text")
     
     # extract the text
     if pdf is not None:
-      loader = TextLoader(pdf)
-      documents = loader.load()
-    
+      
+      document_text = str(uploaded_file.read(), "utf-8")
+      documents = document_text.load()
+        
       # split into chunks
       text_splitter = CharacterTextSplitter(
         separator="\n",
