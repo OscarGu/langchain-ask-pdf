@@ -7,7 +7,7 @@ from langchain.vectorstores import FAISS
 from langchain.chains.question_answering import load_qa_chain
 from langchain.llms import OpenAI
 from langchain.callbacks import get_openai_callback
-
+from langchain_pinecone import PineconeVectorStore
 
 # add openAI key input
 def get_api_key():
@@ -15,6 +15,14 @@ def get_api_key():
     return input_text
 
 OPENAI_API_KEY = get_api_key()
+
+# add Pinecone key input
+def get_pinecone_key():
+    input_text = st.text_input(label="Pinecone API Key ",  placeholder="Ex: sk-2twmA8tfCb8un4...", key="pinecone_api_key_input")
+    return input_text
+
+PINECONE_API_KEY = get_pinecone_key()
+
 
 def main():
     load_dotenv()
@@ -39,17 +47,21 @@ def main():
         chunk_overlap=200,
         length_function=len
       )
-      chunks = text_splitter.split_text(text)
+      docs = text_splitter.split_text(text)
       
       # create embeddings
       embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
-      knowledge_base = FAISS.from_texts(chunks, embeddings)
+
+      index_name = "doc-chat"
+      docsearch = PineconeVectorStore.from_documents(docs, embeddings, index_name=index_name)
+
+
       
       # show user input
       user_question = st.text_input("Ask a question about your PDF:")
       if user_question:
-        docs = knowledge_base.similarity_search(user_question)
-        
+        docs = docsearch.similarity_search(user_question)
+                
         if OPENAI_API_KEY:        
             llm = OpenAI(openai_api_key=OPENAI_API_KEY)
             chain = load_qa_chain(llm, chain_type="map_reduce")
