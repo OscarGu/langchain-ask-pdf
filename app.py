@@ -32,7 +32,7 @@ def main():
     
    
     # upload file
-    pdf = st.file_uploader("Upload your PDF/Text", type="txt")
+    pdf = st.file_uploader("Upload your PDF/Text")
     
     # extract the text
     if pdf is not None:
