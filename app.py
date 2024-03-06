@@ -35,7 +35,7 @@ def main():
     uploaded_file = st.file_uploader("Upload your PDF/Text")
     
     # extract the text
-    if pdf is not None:
+    if uploaded_file is not None:
       
       document_text = str(uploaded_file.read(), "utf-8")
       documents = document_text.load()
