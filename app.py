@@ -27,12 +27,12 @@ PINECONE_API_KEY = get_pinecone_key()
 
 def main():
     load_dotenv()
-    #st.set_page_config(page_title="Ask your PDF")
+    #st.set_page_config(page_title="Ask your File")
     st.header("Ask your PDF 💬")
     
    
     # upload file
-    pdf = st.file_uploader("Upload your PDF/Text", type="text")
+    pdf = st.file_uploader("Upload your PDF/Text", type="txt")
     
     # extract the text
     if pdf is not None:
