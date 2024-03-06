@@ -47,7 +47,7 @@ def main():
         chunk_overlap=200,
         length_function=len
       )
-      docs = text_splitter.split_text(text)
+      docs = text_splitter.split_documents(text)
       
       # create embeddings
       embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
