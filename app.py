@@ -39,7 +39,10 @@ def main():
       text = ""
       for page in pdf_reader.pages:
         text += page.extract_text()
-        
+
+    loader = TextLoader(text)
+    documents = loader.load()
+    
       # split into chunks
       text_splitter = CharacterTextSplitter(
         separator="\n",
@@ -47,7 +50,7 @@ def main():
         chunk_overlap=200,
         length_function=len
       )
-      docs = text_splitter.split_documents(text)
+      docs = text_splitter.split_documents(documents)
       
       # create embeddings
       embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
