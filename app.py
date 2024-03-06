@@ -37,9 +37,8 @@ def main():
     # extract the text
     if uploaded_file is not None:
       
-      document_text = str(uploaded_file.read(), "utf-8")
-      documents = document_text.load()
-        
+      documents = str(uploaded_file.read(), "utf-8")
+              
       # split into chunks
       text_splitter = CharacterTextSplitter(
         separator="\n",
