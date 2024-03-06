@@ -32,16 +32,11 @@ def main():
     
    
     # upload file
-    pdf = st.file_uploader("Upload your PDF", type="pdf")
+    pdf = st.file_uploader("Upload your PDF/Text", type="text")
     
     # extract the text
     if pdf is not None:
-      pdf_reader = PdfReader(pdf)
-      text = ""
-      for page in pdf_reader.pages:
-        text += page.extract_text()
-
-      loader = TextLoader(text)
+      loader = TextLoader(pdf)
       documents = loader.load()
     
       # split into chunks
