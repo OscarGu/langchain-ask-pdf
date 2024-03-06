@@ -40,8 +40,8 @@ def main():
       for page in pdf_reader.pages:
         text += page.extract_text()
 
-    loader = TextLoader(text)
-    documents = loader.load()
+      loader = TextLoader(text)
+      documents = loader.load()
     
       # split into chunks
       text_splitter = CharacterTextSplitter(
